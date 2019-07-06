@@ -1,0 +1,120 @@
+Linux
+	
+1.上传，下载
+2.vim编辑器
+	vi/vim命令  可创建文件
+	正常模式下：set nu 显示行号  set nonu  不显示行号
+	u 撤销刚才编辑的内容
+	i/a 进入编辑模式
+3.关机&重启
+	shutdown：
+		shutdown -h now  立即关机
+		shutdown -h 1 一分钟后关机
+		shutdown -r now 立即重启
+	
+	halt
+		关机
+	
+	reboot 重启
+	sync  内存数据同步到磁盘
+	
+4.用户登录和注销
+	
+	添加用户
+		useradd -d 用户名
+		添加组内用户 useradd -g 组名称 用户名
+	给用户指定密码：passwd 密码
+	删除用户
+		1.保留家目录  userdel 用户名
+		2.不保留家目录  userdel -r 用户名
+	查询用户
+		id 用户名
+	切换用户（从权限高的用户切换到底的用户，不需要输入密码）
+		su - 用户名
+	查看当前用户
+		whoami
+	
+5.用户组
+	新增组
+		groupadd 组名称
+	删除组
+		groupdel 组名称
+	添加组内用户 useradd -g 组名称 用户名
+	修改用户的组
+		usermod -g 组名称 用户名
+		
+	/etc/passwd 用户信息
+	/etc/group 组信息
+	/etc/shadow  口令信息
+
+6.服务器运行级别
+	0-关机，1-单用户（找回丢失的密码），2-多用户无网络服务，3-多用户有网络服务，4-系统未使用保留给用户，5-图形界面，6-系统重启
+	运行级别保存文件 /etc/inittab
+	设置运行级别
+		init 3
+	
+	如何找回丢失的root密码？
+		进入单用户模式，然后修改root密码
+
+7.常用命令
+	（一）文件目录类：
+		pwd  显示当前所在目录
+		ls查看文件列表   -a显示隐藏文件   -l 以列表格式展示  ls -l 相当于  ll
+		cd 进入目录   cd~ 回到自己的家目录   ..代表上一级目录
+			绝对路径：从根路径开始
+			相对路径： 从当前路径开始
+		mkdir 创建目录  例：mkdir /home/dog   
+				创建多级目录  mkdir -p /home/animal/horse
+		rmdir 删除空目录
+			rm -rf 目录文件  删除非空目录   
+		touch  创建空文件
+		cp  复制
+			复制文件夹内所有文件  cp -r 文件夹  目标文件夹
+		rm	删除文件/目录   -r  删除文件夹  -f 强制
+		mv  移动文件或重命名  移动到文件当前目录则为重命名
+		cat 查看文件内容（只读方式）例：cat 文件 | more  分页  	
+		more 显示文本内容   空格-分页，enter-换行  ctrl+b上一页  ctrl+f 下一页
+		less 分屏查看文件内容  / 搜索  空格-分页，enter-换行   ctrl+b上一页  ctrl+f 下一页
+		> 输出重定向  例：ls > 文件  将ls查看内容写入文件中，如果文件不存在就创建，存在就覆盖
+		>> 追加 例：ls >> 文件将ls查看内容写入文件中，如果文件不存在就创建，存在就追加
+			echo "内容" > 文件  直接将内容写入文件
+		echo 输出内容到控制台  echo $PATH 输出系统环境变量
+		head 显示文件头部内容 （默认显示前十行）
+			-n i 指定行数
+		tail 显示文件尾部内容 (默认显示十行)
+			-n i 指定行数
+			-f  显示实时追加数据
+		ln 软连接  例： ln -s /home linkTOhome 新建链接指向home文件夹
+			rm -rf 软连接  删除软链接
+		history 查看历史命令   例： history 10 显示最近10条记录
+				！编号  执行历史编号对应的指令
+	（二）时间日期类
+		date  时间  当前年月日，时分秒  例： date "+%Y-%m-%d %H:%M:%S"  包含格式
+			设置日期  date -s "2019-07-06 12:20:13"  
+		cal  当前日历   cal 2020  显示2020年日历
+	（三）搜索查找类
+		find 查找
+			find /home -name  aa.txt 在home文件夹下，按照名称，查找aa.txt的文件
+				-user  按文件的拥有者查询
+				-size  按大小查询  find / -size +20M  大于20M   -20M : 小于20M   20M ： 等于20M
+								20k 
+				可以使用通配符  find / -name *.txt 查找后缀名为txt的文件
+		locate  快速定位文件路径	 （测试不可用）
+			使用前需要使用updatedb指定创建locate数据库
+		grep 文件内容搜索 与管道符"|" 联合使用
+			例： cat aa.txt | grep ss	-n 显示行号  -i 不区分大小写
+	（四）压缩和解压缩
+		gzip/gunzip 压缩或解压缩后，原文件不保留
+		
+		zip/unzip   (测试不可用)
+		
+		tar 打包   例： tar -zcvf a.gz a.txt  
+				解压缩  tar -zxvf a.gz -C /目前目录
+
+			
+		
+		
+		
+		
+			
+	
