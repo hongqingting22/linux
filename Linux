@@ -12,14 +12,11 @@ Linux
 		shutdown -h 1 一分钟后关机
 		shutdown -r now 立即重启
 	
-	halt
-		关机
-	
+	halt 关机
 	reboot 重启
 	sync  内存数据同步到磁盘
 	
 4.用户登录和注销
-	
 	添加用户
 		useradd -d 用户名
 		添加组内用户 useradd -g 组名称 用户名
