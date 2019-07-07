@@ -1,6 +1,7 @@
 Linux
 	
 1.上传，下载
+	xftp
 2.vim编辑器
 	vi/vim命令  可创建文件
 	正常模式下：set nu 显示行号  set nonu  不显示行号
@@ -24,11 +25,13 @@ Linux
 		useradd -d 用户名
 		添加组内用户 useradd -g 组名称 用户名
 	给用户指定密码：passwd 密码
+	修改用户密码  ：  passwd 用户名
 	删除用户
 		1.保留家目录  userdel 用户名
 		2.不保留家目录  userdel -r 用户名
 	查询用户
-		id 用户名
+		id 用户名  
+		uid=500(xl) gid=501(shaolin) groups=501(shaolin)
 	切换用户（从权限高的用户切换到底的用户，不需要输入密码）
 		su - 用户名
 	查看当前用户
@@ -111,7 +114,103 @@ Linux
 		tar 打包   例： tar -zcvf a.gz a.txt  
 				解压缩  tar -zxvf a.gz -C /目前目录
 
+
+8.实操篇
+	1）权限
+		1，所有者
+			查看文件所有者 ls -ahl  查看所有文件的所有者
+				ls -ahl 文件名  查看文件的所有者
+				
+			修改文件所有者 chown 用户名 文件名   (change owner)
+			修改文件所在组 chgrp 组名  文件名   (change group)
 			
+			修改用户所在组 usermod -g 组名 用户名   例： usermod -g shaolin xl
+		2.权限
+		-rw-r--r-- 1 sxl emei 0 Jul  7 14:09 sxl.txt
+				-              rw-             r--            r--          1            
+			文件类型      文件所有者的权限  所在组的权限  其他组权限  如果是文件，表示硬链接
+			-：普通文件 											 如果是目录，表示子目录个数
+			d:目录文件
+			l:软连接
+			c:字符设备
+			（鼠标，键盘）
+			b:块文件，硬盘
+			
+			
+			 sxl             emei       0          Jul  7 14:09   sxl.txt
+			 文件所有者     文件所在组  文件大小  文件修改时间   文件名
+										目录本身占4096
+			 
+			 rwx 作用于文件：  读，写（删除还取决于对目录的权限，对父目录有写权限才可删除），执行
+			    作用于目录：读-ls查看目录内容，修改-目录内创建、删除、重命名目录，执行-进入该目录
+		
+			修改文件/目录权限
+				u:所有者，g:所有组，o:其他人，a:所有人
+				chmod u=rwx,g=r,o=r--  文件名         例： chmod u=rwx,g=rw,o=rw sxl.txt
+				chmod u+w 文件名   所有者添加写权限   例： chmod u+w sxl.txt
+				chmod u-w 文件名   所有者去掉写权限   例： chmod a-w sxl.txt
+				chmod 755 文件名   rwx:7 r-x:5       
+				
+			修改文件的所有者和所有组
+				chown 所有者 文件
+				chown 所有者:所有组  文件   同时修改所有者，所有组  (冒号前后可为空，则为不修改对应数据)
+				-R  如果是目录，则递归修改目录下所有子文件
+				
+				例：chown :shaolin sxl.txt  修改sxl.txt所在组
+					chown xl:emei -R sxl   修改sxl目录下所有文件/目录的所有者和所在组
+					
+	
+	2）定时任务调度
+		crontab 选项
+		常用选项  
+			-e  编辑任务
+			-l  查询任务
+			-r  删除当前用户所有任务
+		# .---------------- minute (0 - 59)
+		# |  .------------- hour (0 - 23)
+		# |  |  .---------- day of month (1 - 31)v
+		# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+		# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+		# |  |  |  |  |
+		# *  *  *  *  * user-name command to be executed
+
+		通配符  * * * * *  时间
+			*  每
+			， 多次分割
+			-  连续时间范围  * * * * 1-6 
+			*/n  每隔多久执行一次
+			
+			例： 0 4,8,12 * * * 每天 4,8,12点执行
+				0 0 * * 1-6 每周一到六0点执行
+				*/10 * * * * 每隔10分钟执行
+				
+		例： 
+			A:直接实现定时任务
+			1)crontab -e  编辑任务
+			2)*/1 * * * * cal >> /home/log.txt   没分钟将日历写入log.txt文件
+			 
+			B:编写脚本实现定时任务			 
+			 1)创建mytask1.sh  编辑内容   date >> /home/date.txt    编写脚本文件，查询时间放入date.txt
+			 2)crontab -e  编辑任务
+			 3)*/1 * * * * sh mytask1.sh   每隔一分钟启动脚本
+			 
+			注： 多个任务分行写在任务文件中
+		
+	3）磁盘分区和挂载
+		（了解）
+
+	4）网络配置
+		指定固定的ip地址
+			etc/sysconfig/network-scripts/ifcfg-eth0  文件中添加
+			IPADDR=ip地址
+			BOOTPROTO=static
+			ONBOOT=yes
+			
+			service network restart   重启网络
+	
+	5）进程管理
+		
+				
 		
 		
 		
