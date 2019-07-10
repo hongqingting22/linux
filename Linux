@@ -206,6 +206,18 @@ Linux
 			service network restart   重启网络
 	
 	5）进程管理
+		查询进程
+			ps -aux 
+			ps -ef 查看进程包含父进程
+		终止进程 kill/killall
+			kill [pid]
+			kill -9 [pid] 强制终止进程
+		
+		查看进程树
+			pstree  
+			-p 显示进程号  
+			-u 显示进程所有用户
+			
 		
 				
 		
