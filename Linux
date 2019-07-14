@@ -7,6 +7,9 @@ Linux
 	正常模式下：set nu 显示行号  set nonu  不显示行号
 	u 撤销刚才编辑的内容
 	i/a 进入编辑模式
+	
+	注释  #
+	多行注释 :>>!多行内容!
 3.关机&重启
 	shutdown：
 		shutdown -h now  立即关机
@@ -217,8 +220,84 @@ Linux
 			pstree  
 			-p 显示进程号  
 			-u 显示进程所有用户
+		
+	6）服务管理指令
+		service 服务名 [start|stop|restart|reload|status]
+		systemctl
+		
+		案例
+		防火墙
+			service iptables start|stop|status
+			
+		 telnet 检查某端口是否在监听，连接某主机，端口
+		
+		系统服务列表文件 /etc/init.d/
+		
+		chkconfig 查看各服务在各运行级别自启动的开关
+		chkconfig --level 5 xx on/off  修改某服务在某级别的开关
+		chkconfig xx on/off 修改某服务所有级别开关
+		
+	7）动态监控进程
+		top  查看正在执行的进程
+
+		top命令下 ：输入u   ，输入用户名   之查看用户下进程
+			k   输入进程号   杀死进程
+			q  退出
+			
+			P 按cpu排序
+			M 按内存使用排序
+			N 按pid排序
+		
+	8）查看系统网络服务
+		netstat
+	
+	9）rpm包管理
+		类似windows下exe文件
+		rpm -qa 查询所有rpm安装包  | grep  xx   搜索
+		
+		rpm -qi xx  查询某软件内容
+		rpm -ql xx  查询软件包安装目录    例： rpm -ql firefox    
+		rpm -qf xx  查看某文件属于哪个包  例： rpm -qf /etc/passwd
+		
+		卸载
+		rpm -e xx   删除某软件包
+		rpm -e -nodeps xx  强制删除
+		
+		安装
+		rpm -ivh xx  安装
+		i=install  安装   v=verbose  提示   h=hash  进度条
+	
+	10）yum指令
+		查看	yum list  
+		下载安装  yum install xx
+		
+
+			
+			
+
+
+
+				   
+				   
+				  
+				   
+				   
+				  
+				
+				
+
+				
+
+			
+			
 			
 		
+		
+		
+		
+		
+		
+	
 				
 		
 		
